@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Hangfire;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -11,7 +12,7 @@ using Microsoft.Extensions.Hosting;
 
 namespace CryptoTrader.Web
 {
-    public class Startup 
+    public class Startup
     {
         public Startup(IConfiguration configuration)
         {
@@ -23,6 +24,8 @@ namespace CryptoTrader.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddHangfire(config => config.UseSqlServerStorage(Configuration.GetConnectionString("HangFireConnection")));
+            services.AddHangfireServer();
             services.AddControllersWithViews();
         }
 
@@ -41,6 +44,8 @@ namespace CryptoTrader.Web
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+
+            app.UseHangfireDashboard("/hangfire");
 
             app.UseRouting();
 
