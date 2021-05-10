@@ -11,7 +11,7 @@ using Microsoft.Extensions.Hosting;
 
 namespace CryptoTrader.Web
 {
-    public class Startup
+    public class Startup 
     {
         public Startup(IConfiguration configuration)
         {
