@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using CryptoTrader.Web.Models;
+using Hangfire;
+using CryptoTrader.Web.BackgroundJobs;
 
 namespace CryptoTrader.Web.Controllers
 {
@@ -20,6 +22,8 @@ namespace CryptoTrader.Web.Controllers
 
         public IActionResult Index()
         {
+            RecurringJobs.ReportingJob();
+
             return View();
         }
 
