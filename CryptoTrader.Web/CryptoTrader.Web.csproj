@@ -8,6 +8,11 @@
     <PackageReference Include="Hangfire.AspNetCore" Version="1.7.22" />
     <PackageReference Include="Hangfire.Core" Version="1.7.22" />
     <PackageReference Include="Hangfire.SqlServer" Version="1.7.22" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Binance.API.Csharp.Client\Binance.API.Csharp.Client.csproj" />
   </ItemGroup>
 
 </Project>
