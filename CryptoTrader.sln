@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Binance.API.Csharp.Client.D
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Binance.API.Csharp.Client", "Binance.API.Csharp.Client\Binance.API.Csharp.Client.csproj", "{6FDA0C75-0A38-459A-8783-AFF05CA113D6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CryptoTrader.Utilities", "CryptoTrader.Utilities\CryptoTrader.Utilities.csproj", "{450A779F-4B4D-4B2C-97AD-CBBD6892DCF1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{6FDA0C75-0A38-459A-8783-AFF05CA113D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6FDA0C75-0A38-459A-8783-AFF05CA113D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6FDA0C75-0A38-459A-8783-AFF05CA113D6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{450A779F-4B4D-4B2C-97AD-CBBD6892DCF1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{450A779F-4B4D-4B2C-97AD-CBBD6892DCF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{450A779F-4B4D-4B2C-97AD-CBBD6892DCF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{450A779F-4B4D-4B2C-97AD-CBBD6892DCF1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
