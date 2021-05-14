@@ -3,7 +3,6 @@ using System;
 
 namespace Binance.API.Csharp.Client.Models.Account
 {
-
     public class Order
     {
         [JsonProperty("symbol")]

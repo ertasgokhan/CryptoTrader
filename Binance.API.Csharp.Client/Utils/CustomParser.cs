@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Binance.API.Csharp.Client.Models.Market;
+﻿using Binance.API.Csharp.Client.Models.Market;
 using Binance.API.Csharp.Client.Models.WebSocket;
 using Newtonsoft.Json.Linq;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Binance.API.Csharp.Client.Utils
 {
