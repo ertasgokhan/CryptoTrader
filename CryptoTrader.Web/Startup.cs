@@ -2,10 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CryptoTrader.Web.Models;
 using Hangfire;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -24,8 +27,19 @@ namespace CryptoTrader.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddHangfire(config => config.UseSqlServerStorage(Configuration.GetConnectionString("HangFireConnection")));
+            // HangFire
+            services.AddHangfire(
+                config => config.UseSqlServerStorage(Configuration.GetConnectionString("HangFireConnection"))
+            );
             services.AddHangfireServer();
+
+            // Identity Server
+            services.AddDbContext<CryptoTraderDbContext>(opt =>
+            {
+                opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
+            });
+            services.AddIdentity<AppUser, IdentityRole>().AddEntityFrameworkStores<CryptoTraderDbContext>();
+
             services.AddControllersWithViews();
         }
 
@@ -50,6 +64,8 @@ namespace CryptoTrader.Web
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseAuthentication();
 
             app.UseEndpoints(endpoints =>
             {
