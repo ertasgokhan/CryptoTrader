@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CryptoTrader.Web.Models
 {
-    public class CryptoTraderDbContext : IdentityDbContext<AppUser>
+    public class CryptoTraderDbContext : IdentityDbContext<AppUser, AppRole, string>
     {
         public CryptoTraderDbContext(DbContextOptions<CryptoTraderDbContext> options) : base(options)
         {

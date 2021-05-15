@@ -38,7 +38,7 @@ namespace CryptoTrader.Web
             {
                 opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
-            services.AddIdentity<AppUser, IdentityRole>().AddEntityFrameworkStores<CryptoTraderDbContext>();
+            services.AddIdentity<AppUser, AppRole>().AddEntityFrameworkStores<CryptoTraderDbContext>();
 
             services.AddControllersWithViews();
         }
