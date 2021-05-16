@@ -7,6 +7,7 @@ using CryptoTrader.Web.Models;
 using Hangfire;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -50,6 +51,22 @@ namespace CryptoTrader.Web
             }).AddEntityFrameworkStores<CryptoTraderDbContext>().AddPasswordValidator<CustomPasswordValidation>();
 
             services.AddControllersWithViews();
+
+            // CookieBuilder
+            CookieBuilder cookieBuilder = new CookieBuilder();
+            cookieBuilder.Name = "CryptoTrader";
+            cookieBuilder.HttpOnly = true;
+            cookieBuilder.Expiration = TimeSpan.FromDays(1);
+            cookieBuilder.SameSite = SameSiteMode.Lax;
+            cookieBuilder.SecurePolicy = CookieSecurePolicy.SameAsRequest;
+
+            services.ConfigureApplicationCookie(opts =>
+            {
+                opts.LoginPath = new PathString("/Home/Login");
+                opts.LogoutPath = new PathString("/Home/Index");
+                opts.Cookie = cookieBuilder;
+                opts.SlidingExpiration = true;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
