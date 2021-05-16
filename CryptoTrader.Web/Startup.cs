@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -43,7 +43,11 @@ namespace CryptoTrader.Web
                 opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
 
-            services.AddIdentity<AppUser, AppRole>().AddEntityFrameworkStores<CryptoTraderDbContext>().AddPasswordValidator<CustomPasswordValidation>();
+            services.AddIdentity<AppUser, AppRole>(opts =>
+            {
+                opts.User.RequireUniqueEmail = true;
+                opts.User.AllowedUserNameCharacters = "abcçdefghıijklmnoöpqrsştuüvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._";
+            }).AddEntityFrameworkStores<CryptoTraderDbContext>().AddPasswordValidator<CustomPasswordValidation>();
 
             services.AddControllersWithViews();
         }
