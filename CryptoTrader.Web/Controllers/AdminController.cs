@@ -1,4 +1,5 @@
 ﻿using CryptoTrader.Web.Models;
+using CryptoTrader.Web.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;

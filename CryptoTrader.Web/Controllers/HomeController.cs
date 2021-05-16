@@ -11,32 +11,73 @@ using CryptoTrader.Web.BackgroundJobs;
 using Binance.API.Csharp.Client;
 using Binance.API.Csharp.Client.Models.Market;
 using Binance.API.Csharp.Client.Models.Enums;
+using CryptoTrader.Web.ViewModels;
+using Microsoft.AspNetCore.Identity;
 
 namespace CryptoTrader.Web.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private UserManager<AppUser> _userManager { get; }
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, UserManager<AppUser> userManager)
         {
             _logger = logger;
+            _userManager = userManager;
         }
 
-        [Obsolete]
         public IActionResult Index()
         {
             //RecurringJobs.ReportingJob();
 
-            ApiClient apiClient = new ApiClient("PrX05PfE29cfXV9YyKwj3zrMadaC4jF7dr4UWoKid5RgQ1WsPsNJD8KLP56g3AwF", "fEOFqMgvXj8ew37Qp12ZpfxlFynmxYNEneNtJVPKQWvs3dvt0LkNNEzQ6660ubiT");
-            BinanceClient binanceClient = new BinanceClient(apiClient);
+            //ApiClient apiClient = new ApiClient("PrX05PfE29cfXV9YyKwj3zrMadaC4jF7dr4UWoKid5RgQ1WsPsNJD8KLP56g3AwF", "fEOFqMgvXj8ew37Qp12ZpfxlFynmxYNEneNtJVPKQWvs3dvt0LkNNEzQ6660ubiT");
+            //BinanceClient binanceClient = new BinanceClient(apiClient);
 
-            List<Candlestick> tempCandlestick = new List<Candlestick>();
+            //List<Candlestick> tempCandlestick = new List<Candlestick>();
 
-            tempCandlestick = binanceClient.GetCandleSticks("BNBUSDT", TimeInterval.Hours_1, DateTime.Now.AddMonths(-1), DateTime.Now, 1000).Result.ToList();
+            //tempCandlestick = binanceClient.GetCandleSticks("BNBUSDT", TimeInterval.Hours_1, DateTime.Now.AddMonths(-1), DateTime.Now, 1000).Result.ToList();
 
-            var accountInfos = binanceClient.GetAccountInfo().Result;
+            //var accountInfos = binanceClient.GetAccountInfo().Result;
 
+            return View();
+        }
+
+        public IActionResult SignUp()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> SignUp(UserViewModel userViewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                AppUser appUser = new AppUser();
+                appUser.UserName = userViewModel.UserName;
+                appUser.Email = userViewModel.Email;
+                appUser.PhoneNumber = userViewModel.PhoneNumber;
+
+                IdentityResult result = await _userManager.CreateAsync(appUser, userViewModel.PassWord);
+
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Login");
+                }
+                else
+                {
+                    foreach (var item in result.Errors)
+                    {
+                        ModelState.AddModelError("", item.Description);
+                    }
+                }
+            }
+
+            return View(userViewModel);
+        }
+
+        public IActionResult LogIn()
+        {
             return View();
         }
 

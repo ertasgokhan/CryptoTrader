@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CryptoTrader.Web.CustomValidation;
 using CryptoTrader.Web.Models;
 using Hangfire;
 using Microsoft.AspNetCore.Builder;
@@ -27,10 +28,13 @@ namespace CryptoTrader.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddRazorPages();
+
             // HangFire
             services.AddHangfire(
                 config => config.UseSqlServerStorage(Configuration.GetConnectionString("HangFireConnection"))
             );
+
             services.AddHangfireServer();
 
             // Identity Server
@@ -38,7 +42,8 @@ namespace CryptoTrader.Web
             {
                 opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
-            services.AddIdentity<AppUser, AppRole>().AddEntityFrameworkStores<CryptoTraderDbContext>();
+
+            services.AddIdentity<AppUser, AppRole>().AddEntityFrameworkStores<CryptoTraderDbContext>().AddPasswordValidator<CustomPasswordValidation>();
 
             services.AddControllersWithViews();
         }
@@ -57,6 +62,7 @@ namespace CryptoTrader.Web
                 app.UseHsts();
             }
             app.UseHttpsRedirection();
+
             app.UseStaticFiles();
 
             app.UseHangfireDashboard("/hangfire");
@@ -69,9 +75,7 @@ namespace CryptoTrader.Web
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}");
             });
         }
     }
