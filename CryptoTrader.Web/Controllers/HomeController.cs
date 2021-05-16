@@ -20,11 +20,13 @@ namespace CryptoTrader.Web.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private UserManager<AppUser> _userManager { get; }
+        private SignInManager<AppUser> _signInManager { get; }
 
-        public HomeController(ILogger<HomeController> logger, UserManager<AppUser> userManager)
+        public HomeController(ILogger<HomeController> logger, UserManager<AppUser> userManager, SignInManager<AppUser> signInManager)
         {
             _logger = logger;
             _userManager = userManager;
+            _signInManager = signInManager;
         }
 
         public IActionResult Index()
@@ -78,6 +80,34 @@ namespace CryptoTrader.Web.Controllers
 
         public IActionResult LogIn()
         {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> LogIn(LoginViewModel loginViewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                AppUser user = await _userManager.FindByEmailAsync(loginViewModel.Email);
+
+                if (user != null)
+                {
+                    await _signInManager.SignOutAsync();
+
+                    Microsoft.AspNetCore.Identity.SignInResult result = await _signInManager.PasswordSignInAsync(user, loginViewModel.PassWord, false, false);
+
+                    if (result.Succeeded)
+                    {
+
+                        return RedirectToAction("Index", "Member");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", "Invalid E-Mail or Password");
+                    }
+                }
+            }
+
             return View();
         }
 
