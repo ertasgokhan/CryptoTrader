@@ -56,7 +56,6 @@ namespace CryptoTrader.Web
             CookieBuilder cookieBuilder = new CookieBuilder();
             cookieBuilder.Name = "CryptoTrader";
             cookieBuilder.HttpOnly = true;
-            cookieBuilder.Expiration = TimeSpan.FromDays(1);
             cookieBuilder.SameSite = SameSiteMode.Lax;
             cookieBuilder.SecurePolicy = CookieSecurePolicy.SameAsRequest;
 
@@ -64,6 +63,7 @@ namespace CryptoTrader.Web
             {
                 opts.LoginPath = new PathString("/Home/Login");
                 opts.LogoutPath = new PathString("/Home/Index");
+                opts.ExpireTimeSpan = TimeSpan.FromDays(1);
                 opts.Cookie = cookieBuilder;
                 opts.SlidingExpiration = true;
             });
