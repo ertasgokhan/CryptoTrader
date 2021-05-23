@@ -78,8 +78,10 @@ namespace CryptoTrader.Web.Controllers
             return View(userViewModel);
         }
 
-        public IActionResult LogIn()
+        public IActionResult LogIn(string ReturnUrl)
         {
+            TempData["ReturnUrl"] = ReturnUrl;
+
             return View();
         }
 
@@ -94,12 +96,14 @@ namespace CryptoTrader.Web.Controllers
                 {
                     await _signInManager.SignOutAsync();
 
-                    Microsoft.AspNetCore.Identity.SignInResult result = await _signInManager.PasswordSignInAsync(user, loginViewModel.PassWord, false, false);
+                    Microsoft.AspNetCore.Identity.SignInResult result = await _signInManager.PasswordSignInAsync(user, loginViewModel.PassWord, loginViewModel.RememberMe, false);
 
                     if (result.Succeeded)
                     {
-
-                        return RedirectToAction("Index", "Member");
+                        if (TempData["ReturnUrl"] != null)
+                            return Redirect(TempData["ReturnUrl"].ToString());
+                        else
+                            return RedirectToAction("Index", "Member");
                     }
                     else
                     {
@@ -108,7 +112,7 @@ namespace CryptoTrader.Web.Controllers
                 }
             }
 
-            return View();
+            return View(loginViewModel);
         }
 
         public IActionResult Privacy()

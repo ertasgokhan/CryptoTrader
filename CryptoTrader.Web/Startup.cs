@@ -86,13 +86,13 @@ namespace CryptoTrader.Web
 
             app.UseStaticFiles();
 
+            app.UseAuthentication();
+            
             app.UseHangfireDashboard("/hangfire");
 
             app.UseRouting();
 
             app.UseAuthorization();
-
-            app.UseAuthentication();
 
             app.UseEndpoints(endpoints =>
             {

@@ -17,5 +17,7 @@ namespace CryptoTrader.Web.ViewModels
         [Display(Name = "Password")]
         [DataType(DataType.Password)]
         public string PassWord { get; set; }
+
+        public bool RememberMe { get; set; }
     }
 }
