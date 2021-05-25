@@ -1,5 +1,23 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@{
+    ViewData["Title"] = "Member";
+    Layout = "~/Views/Shared/_MemberLayout.cshtml";
 }
+
+<div class="card rounded-3 overflow-hidden mb-3">
+    <div class="card-body bg-line-chart-gradient">
+        <div class="row align-items-center g-0">
+            <div class="col light">
+                <h4 class="text-white mb-0">Today $764.39</h4>
+                <p class="fs--1 fw-semi-bold text-white">Yesterday <span class="opacity-50">$684.87</span></p>
+            </div>
+            <div class="col-auto d-none d-sm-block">
+                <select class="form-select form-select-sm mb-3" id="dashboard-chart-select">
+                    <option value="all">All Payments</option>
+                    <option value="successful" selected="selected">Successful Payments</option>
+                    <option value="failed">Failed Payments</option>
+                </select>
+            </div>
+        </div>
+        <canvas class="mw-100 rounded" id="chart-line" width="1618" height="375" aria-label="Line chart" role="img"></canvas>
+    </div>
+</div>
