@@ -61,7 +61,7 @@ namespace CryptoTrader.Web
 
             services.ConfigureApplicationCookie(opts =>
             {
-                opts.LoginPath = new PathString("/Home/Login");
+                opts.LoginPath = new PathString("/Home/Index");
                 opts.LogoutPath = new PathString("/Home/Index");
                 opts.ExpireTimeSpan = TimeSpan.FromDays(1);
                 opts.Cookie = cookieBuilder;
