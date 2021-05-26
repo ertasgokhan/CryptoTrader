@@ -115,6 +115,13 @@ namespace CryptoTrader.Web.Controllers
             return View(loginViewModel);
         }
 
+        public IActionResult ForgotPassword(string ReturnUrl)
+        {
+            TempData["ReturnUrl"] = ReturnUrl;
+
+            return View();
+        }
+
         public IActionResult Privacy()
         {
             return View();
