@@ -1,51 +1,4 @@
-﻿@*@model CryptoTrader.Web.ViewModels.UserViewModel
-
-    @{
-        ViewData["Title"] = "SignUp";
-        Layout = "~/Views/Shared/_Layout.cshtml";
-    }
-
-    <h4>Create User</h4>
-    <hr />
-    <div class="row">
-        <div class="col-md-4">
-            <form asp-action="SignUp" method="post">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <div class="form-group">
-                    <label asp-for="UserName" class="control-label"></label>
-                    <input asp-for="UserName" class="form-control" />
-                    <span asp-validation-for="UserName" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="PhoneNumber" class="control-label"></label>
-                    <input asp-for="PhoneNumber" class="form-control" />
-                    <span asp-validation-for="PhoneNumber" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Email" class="control-label"></label>
-                    <input asp-for="Email" class="form-control" />
-                    <span asp-validation-for="Email" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="PassWord" class="control-label"></label>
-                    <input asp-for="PassWord" class="form-control" />
-                    <span asp-validation-for="PassWord" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <input type="submit" value="Create" class="btn btn-primary" />
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <div>
-        <a asp-action="Index">Back to List</a>
-    </div>
-
-    @section Scripts {
-        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-    }*@
-
+﻿@model CryptoTrader.Web.ViewModels.UserViewModel
 
 <div class="row min-vh-100 bg-100">
     <div class="col-6 d-none d-lg-block position-relative">
@@ -58,36 +11,49 @@
         <div class="row justify-content-center g-0">
             <div class="col-lg-9 col-xl-8 col-xxl-6">
                 <div class="card">
-                    <div class="card-header bg-circle-shape bg-shape text-center p-2"><a class="font-sans-serif fw-bolder fs-4 z-index-1 position-relative link-light light" href="../../../index.html">crypto trader</a></div>
+                    <div class="card-header bg-circle-shape bg-shape text-center p-2"><a class="font-sans-serif fw-bolder fs-4 z-index-1 position-relative link-light light" asp-action="Index">crypto trader</a></div>
                     <div class="card-body p-4">
                         <div class="row flex-between-center">
                             <div class="col-auto">
                                 <h3>Kayıt</h3>
                             </div>
-                            <div class="col-auto fs--1 text-600"><span class="mb-0 fw-semi-bold">Üye misin?</span> <span><a href="../../../pages/authentication/split/login.html">Giriş</a></span></div>
+                            <div class="col-auto fs--1 text-600"><span class="mb-0 fw-semi-bold">Üye misin?</span> <span><a asp-action="Index">Giriş</a></span></div>
                         </div>
-                        <form>
+                        <form asp-action="SignUp" method="post" class="needs-validation" novalidate="">
+                            <div asp-validation-summary="All" class="text-danger"></div>
+                            @if (TempData["RegisterSucceeded"] != null)
+                            {
+                                <div class="alert alert-success clearfix">
+                                    Kullanıcı başarıyla yaratılmıştır. Giriş yapabilirsiniz.
+                                </div>
+                            }
                             <div class="mb-3">
-                                <label class="form-label" for="split-name">Adınız</label>
-                                <input class="form-control" type="text" id="split-name" />
+                                <label class="form-label" for="UserName">Kullanıcı Adı</label>
+                                <input class="form-control" type="text" asp-for="UserName" required />
+                                <div class="invalid-feedback">Kullanıcı adınızı giriniz</div>
                             </div>
                             <div class="mb-3">
-                                <label class="form-label" for="split-email">Email adresi</label>
-                                <input class="form-control" type="email" id="split-email" />
+                                <label class="form-label" for="email">Email adresi</label>
+                                <input class="form-control" type="email" asp-for="Email" required />
+                                <div class="invalid-feedback">Email adresinizi giriniz</div>
                             </div>
                             <div class="row gx-2">
                                 <div class="mb-3 col-sm-6">
-                                    <label class="form-label" for="split-password">Şifre</label>
-                                    <input class="form-control" type="password" id="split-password" />
+                                    <label class="form-label" for="password">Şifre</label>
+                                    <input class="form-control" type="password" asp-for="PassWord" required />
+                                    <div class="invalid-feedback">Şifrenizi giriniz</div>
                                 </div>
                                 <div class="mb-3 col-sm-6">
-                                    <label class="form-label" for="split-confirm-password">Şifre Yenile</label>
-                                    <input class="form-control" type="password" id="split-confirm-password" />
+                                    <label class="form-label" for="ConfirmPassWord">Şifre Tekrar</label>
+                                    <input class="form-control" type="password" asp-for="ConfirmPassWord" required />
+                                    <div class="invalid-feedback">Şifre tekrarını giriniz</div>
                                 </div>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="cover-register-checkbox" />
-                                <label class="form-label" for="cover-register-checkbox"><a href="#!">Şartları ve gizlilik politikasını</a> kabul ediyorum</label>
+                                <input class="form-check-input" type="checkbox" asp-for="CoverRegisterCheckbox" required />
+                                <label class="form-label" for="CoverRegisterCheckbox">
+                                    <a href="#!">Şartları ve gizlilik politikasını</a> kabul ediyorum
+                                </label>
                             </div>
                             <div class="mb-3">
                                 <button class="btn btn-primary d-block w-100 mt-3" type="submit" name="submit">Kayıt ol</button>

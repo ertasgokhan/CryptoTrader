@@ -1,4 +1,6 @@
-﻿<div class="row min-vh-100 bg-100">
+﻿@model CryptoTrader.Web.ViewModels.LoginViewModel
+
+<div class="row min-vh-100 bg-100">
     <div class="col-6 d-none d-lg-block position-relative">
         <div class="bg-holder" style="background-image:url('/public/assets/img/generic/14.jpg');background-position: 50% 20%;">
         </div>
@@ -9,27 +11,31 @@
         <div class="row justify-content-center g-0">
             <div class="col-lg-9 col-xl-8 col-xxl-6">
                 <div class="card">
-                    <div class="card-header bg-circle-shape bg-shape text-center p-2"><a class="font-sans-serif fw-bolder fs-4 z-index-1 position-relative link-light light" href="../../../index.html">crypto trader</a></div>
+                    <div class="card-header bg-circle-shape bg-shape text-center p-2"><a class="font-sans-serif fw-bolder fs-4 z-index-1 position-relative link-light light" asp-route="Index">crypto trader</a></div>
                     <div class="card-body p-4">
                         <div class="row flex-between-center">
                             <div class="col-auto">
                                 <h3>Giriş</h3>
                             </div>
-                            <div class="col-auto fs--1 text-600"><span class="mb-0 fw-semi-bold">Üye değil misin?</span> <span><a href="../../../pages/authentication/split/register.html">Hesap oluştur</a></span></div>
+                            <div class="col-auto fs--1 text-600"><span class="mb-0 fw-semi-bold">Üye değil misin?</span> <span><a asp-action="SignUp">Hesap oluştur</a></span></div>
                         </div>
-                        <form>
+                        <form asp-action="LogIn" method="post" class="row g-3 needs-validation" novalidate="">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                             <div class="mb-3">
                                 <label class="form-label" for="split-login-email">Email adresi</label>
-                                <input class="form-control" id="split-login-email" type="email" />
+                                <input class="form-control" id="split-login-email" type="email" asp-for="Email" required />
+                                <div class="invalid-feedback">Email adresinizi giriniz</div>
                             </div>
                             <div class="mb-3">
                                 <div class="d-flex justify-content-between">
-                                    <label class="form-label" for="split-login-password">Şifre</label><a class="fs--1" href="../../../pages/authentication/split/forgot-password.html ">Şifreni mi unuttun?</a>
+                                    <label class="form-label" for="split-login-password">Şifre</label>
+                                    <a class="fs--1" asp-action="ForgotPassword">Şifreni mi unuttun?</a>
                                 </div>
-                                <input class="form-control" id="split-login-password" type="password" />
+                                <input class="form-control" id="split-login-password" type="password" asp-for="PassWord" required />
+                                <div class="invalid-feedback">Şifrenizi adresinizi giriniz</div>
                             </div>
                             <div class="form-check mb-0">
-                                <input class="form-check-input" type="checkbox" id="split-checkbox" />
+                                <input class="form-check-input" type="checkbox" asp-for="RememberMe" />
                                 <label class="form-check-label" for="split-checkbox">Beni hatırla</label>
                             </div>
                             <div class="mb-3">

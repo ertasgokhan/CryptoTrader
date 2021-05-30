@@ -41,48 +41,10 @@ namespace CryptoTrader.Web.Controllers
             //tempCandlestick = binanceClient.GetCandleSticks("BNBUSDT", TimeInterval.Hours_1, DateTime.Now.AddMonths(-1), DateTime.Now, 1000).Result.ToList();
 
             //var accountInfos = binanceClient.GetAccountInfo().Result;
-
-            return View();
-        }
-
-        public IActionResult SignUp()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> SignUp(UserViewModel userViewModel)
-        {
-            if (ModelState.IsValid)
-            {
-                AppUser appUser = new AppUser();
-                appUser.UserName = userViewModel.UserName;
-                appUser.Email = userViewModel.Email;
-                appUser.PhoneNumber = userViewModel.PhoneNumber;
-
-                IdentityResult result = await _userManager.CreateAsync(appUser, userViewModel.PassWord);
-
-                if (result.Succeeded)
-                {
-                    return RedirectToAction("Login");
-                }
-                else
-                {
-                    foreach (var item in result.Errors)
-                    {
-                        ModelState.AddModelError("", item.Description);
-                    }
-                }
-            }
-
-            return View(userViewModel);
-        }
-
-        public IActionResult LogIn(string ReturnUrl)
-        {
-            TempData["ReturnUrl"] = ReturnUrl;
-
-            return View();
+            if (User.Identity.Name != null)
+                return RedirectToAction("Index", "Member");
+            else
+                return View();
         }
 
         [HttpPost]
@@ -110,9 +72,54 @@ namespace CryptoTrader.Web.Controllers
                         ModelState.AddModelError("", "Invalid E-Mail or Password");
                     }
                 }
+                else
+                {
+                    ModelState.AddModelError("", "Invalid E-Mail or Password");
+                }
             }
 
-            return View(loginViewModel);
+            return View("Index", loginViewModel);
+        }
+
+        public IActionResult SignUp()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> SignUp(UserViewModel userViewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                AppUser appUser = new AppUser();
+                appUser.UserName = userViewModel.UserName;
+                appUser.Email = userViewModel.Email;
+                appUser.PhoneNumber = userViewModel.PhoneNumber;
+
+                IdentityResult result = await _userManager.CreateAsync(appUser, userViewModel.PassWord);
+
+                if (result.Succeeded)
+                {
+                    TempData["RegisterSucceeded"] = true;
+                    return RedirectToAction("SignUp");
+                }
+                else
+                {
+                    foreach (var item in result.Errors)
+                    {
+                        ModelState.AddModelError("", item.Description);
+                    }
+                }
+            }
+
+            return View(userViewModel);
+        }
+
+        public IActionResult LogIn(string ReturnUrl)
+        {
+            TempData["ReturnUrl"] = ReturnUrl;
+
+            return View();
         }
 
         public IActionResult ForgotPassword(string ReturnUrl)

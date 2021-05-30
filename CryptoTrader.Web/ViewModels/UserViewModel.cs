@@ -24,5 +24,15 @@ namespace CryptoTrader.Web.ViewModels
         [Display(Name = "Password")]
         [DataType(DataType.Password)]
         public string PassWord { get; set; }
+
+        [Required(ErrorMessage = "Confirm Password is required")]
+        [Display(Name = "Confirm PassWord")]
+        [DataType(DataType.Password)]
+        [Compare("PassWord", ErrorMessage = "Confirm password doesn't match, Type again !")]
+        public string ConfirmPassWord { get; set; }
+
+        [Required(ErrorMessage = "Cover Register Checkbox is required")]
+        [Display(Name = "CoverRegisterCheckbox ")]
+        public bool CoverRegisterCheckbox { get; set; }
     }
 }
