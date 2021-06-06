@@ -3,6 +3,8 @@
     Layout = "~/Views/Shared/_MemberLayout.cshtml";
 }
 
+@model List<AppRole>
+
 <div class="card mb-3">
     <div class="bg-holder d-none d-lg-block bg-card" style="background-image: url('/public/assets/img/illustrations/corner-4.png');">
     </div>
@@ -22,16 +24,40 @@
         <div class="tab-content">
             <div class="tab-pane preview-tab-pane active" role="tabpanel" aria-labelledby="tab-dom-d6499193-3abd-4315-883b-9e56cf81d8a3" id="dom-d6499193-3abd-4315-883b-9e56cf81d8a3">
                 <form asp-action="Roles" method="post" class="needs-validation" novalidate="">
-                    <div class="mb-3">
-                        <label class="form-label" for="exampleFormControlInput1">Email address</label>
-                        <input class="form-control" id="exampleFormControlInput1" type="search" placeholder="name@example.com" />
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label" for="exampleFormControlTextarea1">Example textarea</label>
-                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-                    </div>
-                    <div class="mb-3">
-                        <button class="btn btn-primary d-block w-100 mt-3" type="submit" name="submit">Dashboard</button>
+                    <div class="table-responsive scrollbar">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Id
+                                    </th>
+                                    <th>
+                                        Rol ismi
+                                    </th>
+                                    <th class="text-end" scope="col">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            @item.Id
+                                        </td>
+                                        <td>
+                                            @item.Name
+                                        </td>
+                                        <td class="text-end">
+                                            <div>
+                                                <button class="btn p-0" type="button" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit"><span class="text-500 fas fa-edit"></span></button>
+                                                <button class="btn p-0 ms-2" type="button" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete"><span class="text-500 fas fa-trash-alt"></span></button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+
+                            </tbody>
+                        </table>
                     </div>
                 </form>
             </div>

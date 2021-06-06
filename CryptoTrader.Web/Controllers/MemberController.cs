@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using CryptoTrader.Web.Models;
+using CryptoTrader.Web.ViewModels;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -7,24 +10,58 @@ using System.Threading.Tasks;
 
 namespace CryptoTrader.Web.Controllers
 {
+    [Authorize]
     public class MemberController : Controller
     {
-        [Authorize]
+        protected UserManager<AppUser> userManager { get; }
+        protected RoleManager<AppRole> roleManager { get; }
+
+        public MemberController(UserManager<AppUser> userManager, RoleManager<AppRole> roleManager)
+        {
+            this.userManager = userManager;
+            this.roleManager = roleManager;
+        }
+
         public IActionResult Index()
         {
             return View();
         }
 
-        [Authorize]
         public IActionResult Roles()
+        {
+            return View(roleManager.Roles.ToList());
+        }
+
+        public IActionResult AddRole()
         {
             return View();
         }
 
-        [Authorize]
-        public IActionResult AddRoles()
+        [HttpPost]
+        public async Task<IActionResult> AddRole(RoleViewModel roleViewModel)
         {
-            return View();
+            if (ModelState.IsValid)
+            {
+                AppRole appRole = new AppRole();
+                appRole.Name = roleViewModel.Name;
+
+                IdentityResult result = await roleManager.CreateAsync(appRole);
+
+                if (result.Succeeded)
+                {
+                    TempData["AddRoleSucceeded"] = true;
+                    roleViewModel = new RoleViewModel();
+                }
+                else
+                {
+                    foreach (var item in result.Errors)
+                    {
+                        ModelState.AddModelError("", item.Description);
+                    }
+                }
+            }
+
+            return View(roleViewModel);
         }
     }
 }
