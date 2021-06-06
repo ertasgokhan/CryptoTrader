@@ -14,5 +14,17 @@ namespace CryptoTrader.Web.Controllers
         {
             return View();
         }
+
+        [Authorize]
+        public IActionResult Roles()
+        {
+            return View();
+        }
+
+        [Authorize]
+        public IActionResult AddRoles()
+        {
+            return View();
+        }
     }
 }

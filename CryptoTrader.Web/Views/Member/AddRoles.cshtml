@@ -1,0 +1,40 @@
+﻿@{
+    ViewData["Title"] = "Add Roles";
+    Layout = "~/Views/Shared/_MemberLayout.cshtml";
+}
+
+<div class="card mb-3">
+    <div class="bg-holder d-none d-lg-block bg-card" style="background-image: url('/public/assets/img/illustrations/corner-4.png');">
+    </div>
+    <!--/.bg-holder-->
+
+    <div class="card-body position-relative">
+        <div class="row">
+            <div class="col-lg-8">
+                <h3>Rol Ekle</h3>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card mb-3">
+    <div class="card-body bg-light">
+        <div class="tab-content">
+            <div class="tab-pane preview-tab-pane active" role="tabpanel" aria-labelledby="tab-dom-d6499193-3abd-4315-883b-9e56cf81d8a3" id="dom-d6499193-3abd-4315-883b-9e56cf81d8a3">
+                <form asp-action="AddRoles" method="post" class="needs-validation" novalidate="">
+                    <div class="mb-3">
+                        <label class="form-label" for="exampleFormControlInput1">Email address</label>
+                        <input class="form-control" id="exampleFormControlInput1" type="search" placeholder="name@example.com" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="exampleFormControlTextarea1">Example textarea</label>
+                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <button class="btn btn-primary d-block w-100 mt-3" type="submit" name="submit">Rol Ekle</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
