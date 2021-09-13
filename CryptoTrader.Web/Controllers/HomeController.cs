@@ -29,9 +29,11 @@ namespace CryptoTrader.Web.Controllers
             _signInManager = signInManager;
         }
 
+        [Obsolete]
         public IActionResult Index()
         {
             //RecurringJobs.ReportingJob();
+            RecurringJobs.ReadAndWriteCandleStickJob();
 
             //ApiClient apiClient = new ApiClient("PrX05PfE29cfXV9YyKwj3zrMadaC4jF7dr4UWoKid5RgQ1WsPsNJD8KLP56g3AwF", "fEOFqMgvXj8ew37Qp12ZpfxlFynmxYNEneNtJVPKQWvs3dvt0LkNNEzQ6660ubiT");
             //BinanceClient binanceClient = new BinanceClient(apiClient);

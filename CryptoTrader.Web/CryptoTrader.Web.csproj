@@ -28,4 +28,8 @@
     <ProjectReference Include="..\Binance.API.Csharp.Client\Binance.API.Csharp.Client.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="CandleStick\" />
+  </ItemGroup>
+
 </Project>
